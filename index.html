@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Izzy | Aspiring Frontend Developer</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="loading-screen">
+    <div class="loading-content">
+    <span class="welcome-text">WELCOME</span>
+    <h1>Izzy</h1>
+    <p>Frontend Developer</p>
+        <div class="loader"></div>
+        <span>Loading...</span>
+    </div>
+</div>
+<nav>
+   <div class="logo">
+    <span>Izzy</span>
+    <small>Frontend Developer</small>
+</div>
+
+  <ul>
+   <li><a href="#home" class="dashboard-link">Home</a></li>
+<li><a href="#about" class="dashboard-link">About</a></li>
+<li><a href="#skills" class="dashboard-link">Skills</a></li>
+<li><a href="#projects" class="dashboard-link">Projects</a></li>
+<li><a href="#experience" class="dashboard-link">Journey</a></li>
+<li><a href="#contact" class="dashboard-link">Contact</a></li>
+</ul>
+</nav>
+<section id="home" class="hero dashboard-section active-section">
+
+    <div class="hero-content">
+     <p class="dashboard-label">MY PORTFOLIO DASHBOARD</p>
+
+        <h1>Alaje Israel Oluwanifemi</h1>
+
+        <h2 class="typing"></h2>
+
+        <p>
+            I'm a Computer Science student learning web development
+            and interested in building modern websites.
+        </p>
+
+      <div class="hero-buttons">
+    <a href="#projects" class="btn primary-btn">View My Projects</a>
+    <a href="#contact" class="btn secondary-btn">Contact Me</a>
+</div>
+<div class="social-links">
+    <a href="#" target="_blank">GitHub</a>
+    <a href="#" target="_blank">LinkedIn</a>
+</div>
+  
+    </div>
+    <div class="hero-image">
+        <img src="file_0000000062c471f4848eba82776f30bd.png" alt="Alaje Israel Oluwanifemi">
+    </div>
+ 
+</section>
+<section id="about" class="about reveal dashboard-section">
+
+    <p class="section-title">ABOUT ME</p>
+
+    <h2>Who I Am</h2>
+
+    <p>
+        I'm Alaje Israel Oluwanifemi, a Computer Science student
+        at Osun State University with a growing interest in
+        frontend development and web technologies.
+    </p>
+
+    <p>
+        I'm currently building my skills through practical projects
+        using HTML, CSS, and JavaScript. My goal is to become a
+        professional frontend developer and create modern,
+        responsive, and user-friendly websites.
+    </p>
+
+</section>
+<section id="skills" class="skills reveal dashboard-section">
+
+    <p class="section-title">MY SKILLS</p>
+
+    <h2>Technologies & Tools I Work With</h2>
+
+    <div class="skills-container">
+
+        <div class="skill-card">
+            <h3>Frontend</h3>
+            <p>HTML, CSS, JavaScript</p>
+        </div>
+
+        <div class="skill-card">
+            <h3>Tools</h3>
+            <p>GitHub, Microsoft Excel</p>
+        </div>
+
+        <div class="skill-card">
+            <h3>Currently Learning</h3>
+            <p>JavaScript & Modern Web Development</p>
+        </div>
+
+    </div>
+
+</section>
+<section id="projects" class="projects reveal dashboard-section">
+
+    <p class="section-title">MY PROJECTS</p>
+
+    <h2>Projects I've Built</h2>
+
+    <div class="projects-container">
+
+        <div class="project-card">
+            <h3>UNIOSUN Info Website</h3>
+
+            <p>
+                A responsive university information website built
+                with HTML and CSS to provide useful information
+                about Osun State University.
+            </p>
+
+            <p class="project-tech">HTML • CSS</p>
+
+            <a href="#" class="project-link">View Project →</a>
+        </div>
+
+        <div class="project-card">
+            <h3>JavaScript Calculator</h3>
+
+            <p>
+                A functional calculator built with HTML, CSS,
+                and JavaScript, supporting basic arithmetic operations.
+            </p>
+
+            <p class="project-tech">HTML • CSS • JavaScript</p>
+
+            <a href="#" class="project-link">View Project →</a>
+        </div>
+
+        <div class="project-card">
+            <h3>Counter App</h3>
+
+            <p>
+                A simple interactive counter application that
+                increases and decreases numbers when buttons are clicked.
+            </p>
+
+            <p class="project-tech">HTML • CSS • JavaScript</p>
+
+            <a href="#" class="project-link">View Project →</a>
+        </div>
+
+    </div>
+
+</section>
+<section id="experience" class="experience dashboard-section">
+
+    <p class="section-title">MY JOURNEY</p>
+
+    <h2>Education & Experience</h2>
+
+    <div class="timeline">
+
+        <div class="timeline-item">
+            <span>Education</span>
+
+            <h3>Computer Science</h3>
+
+            <h4>Osun State University</h4>
+
+            <p>
+                Currently studying Computer Science and developing
+                practical skills in web development and programming.
+            </p>
+        </div>
+
+        <div class="timeline-item">
+            <span>Web Development</span>
+
+            <h3>Frontend Development Journey</h3>
+
+            <h4>Self-Learning & Practical Projects</h4>
+
+            <p>
+                Learning HTML, CSS, and JavaScript while building
+                practical projects to strengthen my frontend
+                development skills.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+   <section id="contact" class="contact">
+
+    <p class="section-title">GET IN TOUCH</p>
+
+    <h2>Let's Talk</h2>
+
+    <p class="contact-text">
+        Have a project, opportunity, or idea?
+        Send me a message and I'll get back to you.
+    </p>
+
+    <form class="contact-form" action="https://formspree.io/f/xbgjkoyn" method="POST">
+<div class="form-header">
+    <h3>Send Me a Message</h3>
+    <p>I'll get back to you as soon as possible.</p>
+</div>
+    <label for="name">Name</label>
+<input
+    type="text"
+    id="name"
+    name="name"
+    placeholder="Enter your name"
+    required
+>
+
+<label for="email">Email</label>
+<input
+    type="email"
+    id="email"
+    name="email"
+    placeholder="Enter your email"
+    required
+>
+
+<label for="subject">Subject</label>
+<input
+    type="text"
+    id="subject"
+    name="subject"
+    placeholder="What would you like to discuss?"
+    required
+>
+
+<label for="message">Message</label>
+<textarea
+    id="message"
+    name="message"
+    placeholder="Tell me about your project or opportunity..."
+    rows="6"
+    required
+></textarea>
+
+        <button type="submit" id="send-button">
+    Send Message →
+</button>
+<p class="form-status"></p>
+    </form>
+
+    <div class="whatsapp-contact">
+        <p>Prefer WhatsApp?</p>
+
+        <a href="https://wa.me/2348157611743" target="_blank">
+            💬 Chat with me on WhatsApp
+        </a>
+    </div>
+
+</section>
+</section>
+<footer>
+
+    <p>© 2026 Alaje Israel Oluwanifemi. All rights reserved.</p>
+
+    <p>Built with HTML, CSS & JavaScript.</p>
+
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/3.0.0/typed.umd.js" integrity="sha512-TBofwZKS1Ka3QVu5LEUNjPKs32xK1PxzBIeaXWeGE+zCk2KDwfHLXI7234Tu+UKcHdCoQUzF5Cf4ihFtwdvJlA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+</body>
+</html>
