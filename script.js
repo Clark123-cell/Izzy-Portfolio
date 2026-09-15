@@ -1,122 +1,86 @@
-const typing = new Typed('.typing', {
-    strings: ['Web Designer', 'UI/UX Enthusiast', 'Aspiring Frontend Developer'],
-    typeSpeed: 100,
-    backSpeed: 100,
-    loop: true
-});
+document.addEventListener("DOMContentLoaded", () => {
+    const loadingScreen = document.querySelector(".loading-screen");
+    const navigation = document.querySelector("nav");
+    const menuToggle = document.querySelector(".menu-toggle");
+    const sections = document.querySelectorAll(".dashboard-section");
+    const links = document.querySelectorAll(".dashboard-link");
 
-const navbar = document.querySelector('nav');
+    sections.forEach(section => {
+        if (section.id !== "home") {
+            const backButton = document.createElement("button");
 
-window.addEventListener('scroll', function() {
+            backButton.className = "section-back";
+            backButton.type = "button";
+            backButton.innerHTML = "← Back to Dashboard";
+            backButton.addEventListener("click", () => showSection("home"));
 
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+            section.prepend(backButton);
+        }
+    });
+
+    function closeMenu() {
+        navigation?.classList.remove("menu-open");
+        menuToggle?.setAttribute("aria-expanded", "false");
     }
 
-});
+    function showSection(id, updateUrl = true) {
+        const section = document.getElementById(id) || document.getElementById("home");
 
-const revealElements = document.querySelectorAll('.reveal');
-
-window.addEventListener('scroll', function() {
-
-    revealElements.forEach(function(element) {
-
-        const elementTop = element.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-
-        if (elementTop < windowHeight - 100) {
-            element.classList.add('show');
-        }
-
-    });
-
-});
-window.dispatchEvent(new Event('scroll'));
-
-const contactForm = document.querySelector('.contact-form');
-const sendButton = document.querySelector('#send-button');
-const formStatus = document.querySelector('.form-status');
-
-contactForm.addEventListener('submit', async function(event) {
-
-    event.preventDefault();
-
-    sendButton.textContent = 'Sending...';
-
-    const formData = new FormData(contactForm);
-
-    const response = await fetch(contactForm.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    });
-
-   if (response.ok) {
-    sendButton.textContent = 'SENT ✓';
-    formStatus.textContent = '✓ Message sent successfully.';
-    contactForm.reset();
-
-    setTimeout(function() {
-        sendButton.textContent = 'Send Message →';
-        formStatus.textContent = '';
-    }, 3000);
-}
-else {
-    sendButton.textContent = 'Try Again';
-    formStatus.textContent = '✕ Something went wrong. Please try again.';
-}
-});
-
-
-const dashboardLinks = document.querySelectorAll('.dashboard-link');
-const dashboardSections = document.querySelectorAll('.dashboard-section');
-
-dashboardLinks.forEach(function(link) {
-
-    link.addEventListener('click', function(event) {
-
-        event.preventDefault();
-
-        const targetId = link.getAttribute('href');
-
-        dashboardSections.forEach(function(section) {
-            section.classList.remove('active-section');
+        sections.forEach(item => {
+            item.classList.toggle("active-section", item === section);
         });
 
-        document.querySelector(targetId).classList.add('active-section');
-
-    });
-
-});
-
-dashboardLinks.forEach(function(link) {
-
-    link.addEventListener('click', function() {
-
-        dashboardLinks.forEach(function(item) {
-            item.classList.remove('active-link');
+        links.forEach(link => {
+            link.classList.toggle(
+                "active",
+                link.getAttribute("href") === `#${section.id}`
+            );
         });
 
-        link.classList.add('active-link');
+        if (updateUrl) {
+            history.pushState(null, "", `#${section.id}`);
+        }
 
+        closeMenu();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    links.forEach(link => {
+        link.addEventListener("click", event => {
+            event.preventDefault();
+            showSection(link.getAttribute("href").substring(1));
+        });
     });
 
-});
+    menuToggle?.addEventListener("click", () => {
+        const isOpen = navigation.classList.toggle("menu-open");
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
 
-document.querySelector('a[href="#home"]').classList.add('active-link');
-window.addEventListener('load', function() {
-    const loadingScreen = document.querySelector('.loading-screen');
+    window.addEventListener("popstate", () => {
+        showSection(window.location.hash.substring(1) || "home", false);
+    });
 
-    setTimeout(function() {
-        loadingScreen.style.opacity = '0';
+    showSection(window.location.hash.substring(1) || "home", false);
 
-        setTimeout(function() {
-            loadingScreen.style.display = 'none';
-        }, 500);
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            loadingScreen?.classList.add("loaded");
+            document.body.classList.add("dashboard-ready");
+        }, 700);
+    });
 
-    }, 1500);
+    if (window.Typed) {
+        new Typed(".typing", {
+            strings: [
+                "Aspiring Frontend Developer",
+                "Creative Problem Solver",
+                "Builder of Modern Websites"
+            ],
+            typeSpeed: 55,
+            backSpeed: 30,
+            backDelay: 1600,
+            loop: true
+        });
+    }
 });
