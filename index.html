@@ -1,324 +1,951 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Portfolio of Alaje Israel Oluwanifemi — Frontend Developer.">
+<meta name="theme-color" content="#f0ece6">
+<title>Izzy — Frontend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
 
-    <meta name="description" content="Portfolio of Alaje Israel Oluwanifemi, an aspiring frontend developer building modern web experiences.">
-    <meta name="theme-color" content="#08111f">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+:root{
+  --bg:       #08111f;
+  --bg2:      #0d1a2d;
+  --card-bg:  #0d1a2d;
+  --card-bg2: #13243b;
+  --gold:     #64e6c5;
+  --gold-lt:  #7eefd2;
+  --gold-pill:#0d2a24;
+  --text:     #f4f7fb;
+  --text2:    #9aabc1;
+  --muted:    #6b7a90;
+  --border:   rgba(255,255,255,.08);
+  --border2:  rgba(255,255,255,.05);
+  --radius:   20px;
+  --fh:"Lora",serif;
+  --fb:"Inter",sans-serif;
+  --card-text:#f4f7fb;
+  --card-muted:rgba(154,171,193,.85);
+  --accent2:  #79a9ff;
+}
 
-    <title>Izzy | Aspiring Frontend Developer</title>
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--fb);
+  font-size:1rem;
+  line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
+}
 
-    <link rel="stylesheet" href="style.css">
+/* ── Loading ── */
+#loading{
+  position:fixed;inset:0;z-index:999;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;
+  transition:opacity .5s ease,visibility .5s ease;
+}
+#loading.done{opacity:0;visibility:hidden;pointer-events:none}
+.l-logo{
+  width:52px;height:52px;border-radius:14px;
+  background:var(--card-bg);
+  display:grid;place-items:center;
+  font-family:var(--fh);font-size:1.5rem;font-weight:700;color:var(--gold);
+  margin-bottom:.4rem;
+}
+.l-name{font-family:var(--fh);font-size:1.8rem;font-weight:700;color:var(--text)}
+.l-sub{font-size:.85rem;color:var(--muted)}
+.l-bar{width:140px;height:2px;background:var(--bg2);border-radius:99px;overflow:hidden;margin-top:.8rem}
+.l-bar span{display:block;width:40%;height:100%;background:var(--gold);animation:sweep 1.3s infinite ease-in-out}
+@keyframes sweep{from{transform:translateX(-150%)}to{transform:translateX(400%)}}
+
+/* ── Navbar ── */
+.navbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(8,17,31,.88);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 2.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:68px;
+}
+.nb-brand{display:flex;align-items:center;gap:.75rem}
+.nb-logo{
+  width:40px;height:40px;border-radius:10px;
+  background:var(--card-bg);
+  display:grid;place-items:center;
+  font-family:var(--fh);font-size:1.1rem;font-weight:700;color:var(--gold);
+  flex-shrink:0;
+}
+.nb-brand-text .name{font-family:var(--fh);font-size:1rem;font-weight:700;line-height:1.1}
+.nb-brand-text .role{font-size:.7rem;color:var(--muted)}
+.nb-links{display:flex;align-items:center;gap:.25rem}
+.nb-links a{
+  padding:.5rem .85rem;border-radius:999px;
+  font-size:.85rem;font-weight:500;color:var(--text2);
+  transition:color .2s,background .2s;
+}
+.nb-links a:hover{color:var(--text);background:var(--bg2)}
+.nb-links a.active{color:var(--gold)}
+.nb-cta{
+  padding:.55rem 1.2rem;border-radius:999px;
+  background:var(--gold);color:#06121d;
+  font-size:.85rem;font-weight:600;
+  transition:background .2s,transform .2s;
+  white-space:nowrap;
+}
+.nb-cta:hover{background:var(--gold-lt);transform:translateY(-1px)}
+.nb-right{display:flex;align-items:center;gap:.75rem}
+
+/* ── Nav toggle — always visible ── */
+.nb-toggle{
+  display:flex;
+  width:38px;height:38px;border-radius:10px;
+  background:var(--bg2);border:1px solid var(--border);
+  flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  cursor:pointer;flex-shrink:0;
+  transition:border-color .2s,background .2s;
+}
+.nb-toggle:hover{border-color:var(--gold);background:rgba(100,230,197,.08)}
+.nb-toggle span{display:block;width:16px;height:1.5px;background:var(--text2);border-radius:99px;transition:.2s}
+
+/* ── Dashboard overlay ── */
+.dash-overlay{
+  position:fixed;inset:0;z-index:199;
+  background:rgba(0,0,0,.5);
+  opacity:0;visibility:hidden;
+  transition:opacity .3s ease,visibility .3s ease;
+}
+.dash-overlay.open{opacity:1;visibility:visible}
+
+/* ── Dashboard panel (right slide-in) ── */
+.dash-panel{
+  position:fixed;top:0;right:0;bottom:0;
+  width:min(480px,100vw);
+  z-index:200;
+  background:var(--bg);
+  border-left:1px solid var(--border);
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;
+  display:flex;flex-direction:column;
+}
+.dash-panel.open{transform:translateX(0)}
+
+/* Panel header */
+.dp-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 1.4rem;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;
+  background:var(--bg);
+  z-index:10;
+}
+.dp-brand{display:flex;align-items:center;gap:.7rem}
+.dp-logo{
+  width:40px;height:40px;border-radius:11px;
+  background:var(--card-bg);border:1px solid var(--border);
+  display:grid;place-items:center;
+  font-family:var(--fh);font-size:1.05rem;font-weight:700;color:var(--gold);
+  flex-shrink:0;
+}
+.dp-brand-info .dp-name{font-family:var(--fh);font-size:.95rem;font-weight:700;color:var(--text);line-height:1.2}
+.dp-brand-info .dp-role{font-size:.7rem;color:var(--muted)}
+.dp-close{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--bg2);border:1px solid var(--border);
+  display:grid;place-items:center;
+  font-size:1rem;color:var(--text2);cursor:pointer;
+  transition:border-color .2s,color .2s;flex-shrink:0;
+}
+.dp-close:hover{border-color:var(--gold);color:var(--text)}
+
+/* Quick actions row */
+.dp-actions{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:.65rem;padding:1.1rem 1.4rem;
+  border-bottom:1px solid var(--border);
+}
+.dp-action{
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  padding:1rem .5rem;
+  background:var(--card-bg);border:1px solid var(--border);border-radius:14px;
+  font-size:.78rem;font-weight:500;color:var(--text2);
+  cursor:pointer;text-decoration:none;
+  transition:border-color .2s,color .2s,transform .15s;
+}
+.dp-action:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.dp-action .dp-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--bg2);
+  display:grid;place-items:center;font-size:1rem;
+}
+
+/* Section label */
+.dp-label{
+  padding:.9rem 1.4rem .4rem;
+  font-size:.65rem;font-weight:700;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;
+}
+
+/* Nav rows */
+.dp-nav{list-style:none;padding:0 1.4rem}
+.dp-nav li{border-bottom:1px solid var(--border)}
+.dp-nav li:last-child{border-bottom:none}
+.dp-nav a,.dp-nav button{
+  display:flex;align-items:center;gap:.9rem;
+  width:100%;padding:.95rem 0;
+  font-size:.9rem;font-weight:500;color:var(--text);
+  background:none;border:none;text-align:left;cursor:pointer;
+  text-decoration:none;
+  transition:color .2s;
+}
+.dp-nav a:hover,.dp-nav button:hover{color:var(--gold)}
+.dp-ni{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--card-bg);border:1px solid var(--border);
+  display:grid;place-items:center;font-size:.9rem;flex-shrink:0;
+  transition:border-color .2s;
+}
+.dp-nav a:hover .dp-ni,.dp-nav button:hover .dp-ni{border-color:rgba(100,230,197,.3)}
+.dp-chevron{margin-left:auto;color:var(--muted);font-size:.8rem}
+
+/* Status footer */
+.dp-footer{
+  margin-top:auto;padding:1.2rem 1.4rem;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:.7rem;
+  font-size:.78rem;color:var(--muted);
+}
+.dp-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#4ade80;box-shadow:0 0 8px #4ade80;flex-shrink:0;
+}
+
+/* ── Page ── */
+.page{padding:2rem 2.5rem 4rem}
+
+/* ── Sections ── */
+section{display:none;animation:fadeUp .4s ease both;max-width:1100px;margin:0 auto}
+section.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Hero card ── */
+.hero-card{
+  background:var(--card-bg);
+  border-radius:var(--radius);
+  padding:2.5rem 2.5rem 2rem;
+  position:relative;
+  overflow:hidden;
+  min-height:340px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.hero-card::before{
+  content:"";position:absolute;
+  top:-80px;right:-80px;
+  width:350px;height:350px;
+  background:radial-gradient(circle,rgba(100,230,197,.12),transparent 65%);
+  pointer-events:none;
+}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:.45rem;
+  background:rgba(100,230,197,.12);border:1px solid rgba(100,230,197,.3);
+  padding:.35rem .85rem;border-radius:999px;
+  font-size:.72rem;font-weight:600;color:var(--gold);
+  letter-spacing:.06em;width:fit-content;margin-bottom:1.4rem;
+}
+.hero-pill::before{content:"✦";font-size:.6rem}
+.hero-card h1{
+  font-family:var(--fh);
+  font-size:clamp(2.4rem,5vw,4rem);
+  font-weight:700;line-height:1.08;letter-spacing:-.02em;
+  color:var(--card-text);
+  margin-bottom:1.4rem;
+  max-width:620px;
+}
+.hero-sub-label{
+  color:var(--gold);
+  font-size:.85rem;font-weight:600;margin-bottom:.4rem;
+}
+.hero-body{
+  color:var(--card-muted);
+  font-size:.95rem;max-width:480px;margin-bottom:2rem;
+}
+.hero-bottom{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--gold);color:#06121d;
+  padding:.75rem 1.5rem;border-radius:999px;
+  font-size:.88rem;font-weight:600;
+  transition:background .2s,transform .2s;
+}
+.hero-cta:hover{background:var(--gold-lt);transform:translateY(-2px)}
+.hero-links{display:flex;gap:1rem;margin-top:.6rem}
+.hero-links a{
+  font-size:.8rem;font-weight:600;color:rgba(238,240,244,.5);
+  border-bottom:1px solid transparent;transition:color .2s,border-color .2s;
+}
+.hero-links a:hover{color:var(--gold);border-color:var(--gold)}
+.hero-person{display:flex;align-items:center;gap:.85rem}
+.hero-photo{
+  width:80px;height:80px;object-fit:cover;
+  border-radius:50%;
+  border:2px solid rgba(100,230,197,.4);
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+  flex-shrink:0;
+}
+.hero-person-info .pname{
+  font-weight:600;font-size:.92rem;color:var(--card-text);
+}
+.hero-person-info .ptitle{font-size:.75rem;color:var(--card-muted)}
+
+/* ── Quick portals ── */
+.portals-label{
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;color:var(--muted);
+  text-transform:uppercase;margin:2rem 0 1rem;
+}
+.portals-row{
+  display:flex;gap:.85rem;overflow-x:auto;padding-bottom:.5rem;
+  scrollbar-width:none;
+}
+.portals-row::-webkit-scrollbar{display:none}
+.portal-item{
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  flex-shrink:0;cursor:pointer;
+}
+.portal-icon{
+  width:80px;height:80px;border-radius:50%;
+  background:var(--bg2);border:1px solid var(--border);
+  display:grid;place-items:center;font-size:1.5rem;
+  transition:background .2s,border-color .2s,transform .2s;
+  position:relative;
+}
+.portal-item:hover .portal-icon{background:var(--card-bg2);border-color:rgba(100,230,197,.4);transform:translateY(-3px)}
+.portal-item.active-portal .portal-icon{border-color:var(--gold);background:rgba(100,230,197,.08)}
+.portal-item p{font-size:.75rem;font-weight:500;color:var(--text2);text-align:center}
+.live-badge{
+  position:absolute;top:-2px;left:-2px;
+  background:#c0392b;color:#fff;font-size:.55rem;font-weight:800;
+  padding:.15rem .45rem;border-radius:99px;letter-spacing:.04em;
+}
+
+/* ── Content panels ── */
+.panel{display:none;animation:fadeUp .35s ease both}
+.panel.active{display:block}
+
+/* ── Section header (reused across panels) ── */
+.panel-header{margin-bottom:2rem}
+.panel-eyebrow{
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;
+}
+.panel-eyebrow::before{content:"";display:block;width:14px;height:1.5px;background:var(--gold)}
+.panel-title{
+  font-family:var(--fh);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;
+  letter-spacing:-.03em;line-height:1.1;color:var(--text);
+}
+.panel-sub{color:var(--muted);max-width:58ch;margin-top:.6rem;font-size:.93rem}
+
+/* ── Cards ── */
+.cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.5rem}
+.card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:14px;
+  padding:1.5rem;transition:border-color .2s,transform .2s;
+}
+.card:hover{border-color:rgba(100,230,197,.3);transform:translateY(-2px)}
+.card h3{font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:.5rem;color:var(--text)}
+.card p{font-size:.88rem;color:var(--text2);line-height:1.6}
+.card-icon{font-size:1.4rem;margin-bottom:.75rem}
+
+/* Skill cards */
+.skill-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:1.4rem;transition:border-color .2s}
+.skill-card:hover{border-color:rgba(100,230,197,.3)}
+.skill-card h3{font-size:.78rem;font-weight:700;letter-spacing:.06em;color:var(--gold);margin-bottom:.3rem;text-transform:uppercase}
+.skill-card>p{font-size:.82rem;color:var(--muted);margin-bottom:.75rem}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{
+  font-size:.72rem;font-weight:500;padding:.25rem .65rem;
+  background:var(--bg2);border:1px solid var(--border);border-radius:999px;color:var(--text2);
+}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem}
+
+/* Project cards */
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.5rem}
+.proj-card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:14px;
+  padding:1.6rem;display:flex;flex-direction:column;gap:.7rem;
+  position:relative;overflow:hidden;transition:border-color .2s,transform .2s;
+}
+.proj-card:hover{border-color:rgba(100,230,197,.3);transform:translateY(-3px)}
+.proj-card.featured{border-color:rgba(100,230,197,.3);background:linear-gradient(145deg,rgba(19,36,59,.85),rgba(13,26,45,.65))}
+.proj-card.featured::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2.5px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+.proj-type{font-size:.7rem;font-weight:600;letter-spacing:.06em;color:var(--gold);text-transform:uppercase}
+.proj-card h3{font-family:var(--fh);font-size:1.1rem;font-weight:700;color:var(--text)}
+.proj-card>p{font-size:.87rem;color:var(--text2);flex:1}
+.proj-footer{display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid var(--border);margin-top:.25rem}
+.proj-tags{display:flex;gap:.35rem;flex-wrap:wrap}
+.proj-tag{font-size:.68rem;padding:.2rem .55rem;background:var(--bg2);border:1px solid var(--border);border-radius:999px;color:var(--muted)}
+.proj-link{font-size:.8rem;font-weight:600;color:var(--gold);white-space:nowrap;transition:opacity .2s}
+.proj-link:hover{opacity:.7}
+
+/* Timeline */
+.timeline{margin-top:1.5rem;max-width:600px}
+.tl-item{display:grid;grid-template-columns:110px 1fr;gap:1.5rem;padding:1.6rem 0;border-bottom:1px solid var(--border)}
+.tl-item:last-child{border-bottom:none}
+.tl-year{font-size:.78rem;font-weight:700;color:var(--gold);padding-top:.1rem}
+.tl-body h3{font-family:var(--fh);font-size:1rem;font-weight:700;margin-bottom:.15rem}
+.tl-body h4{font-size:.82rem;font-weight:500;color:var(--muted);margin-bottom:.5rem}
+.tl-body p{font-size:.86rem;color:var(--text2)}
+
+/* Contact */
+.contact-wrap{display:grid;grid-template-columns:1fr 1.3fr;gap:2.5rem;margin-top:1.5rem;align-items:start}
+.contact-aside p{font-size:.9rem;color:var(--text2);margin-bottom:1.5rem}
+.aside-items{display:flex;flex-direction:column;gap:.6rem}
+.aside-item{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.85rem 1rem;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;
+  font-size:.88rem;font-weight:500;color:var(--text2);transition:border-color .2s,color .2s;
+}
+.aside-item:hover{border-color:var(--gold);color:var(--text)}
+.aside-item .ic{font-size:1.1rem;width:1.2rem;text-align:center}
+.cf{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:14px;
+  padding:1.75rem;display:flex;flex-direction:column;gap:.9rem;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.form-group{display:flex;flex-direction:column;gap:.35rem}
+label{font-size:.75rem;font-weight:600;color:var(--muted)}
+input,textarea{
+  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  color:var(--text);font:inherit;font-size:.88rem;
+  padding:.72rem 1rem;outline:none;resize:vertical;
+  transition:border-color .2s,box-shadow .2s;
+}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(100,230,197,.1)}
+.form-btn{
+  background:var(--gold);color:#06121d;
+  padding:.85rem;border-radius:999px;
+  font-size:.9rem;font-weight:600;
+  transition:background .2s,transform .2s;
+}
+.form-btn:hover{background:var(--gold-lt);transform:translateY(-2px)}
+.form-status{font-size:.8rem;color:var(--muted);text-align:center;min-height:1.2rem}
+
+/* About typing */
+.typing-line{
+  font-family:var(--fh);font-size:1rem;font-weight:600;color:var(--gold);
+  min-height:1.5rem;margin-top:.3rem;margin-bottom:.5rem;
+}
+
+/* ── Back button ── */
+.back-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.6rem 1.1rem;margin-bottom:1.8rem;
+  border:1px solid var(--border);border-radius:999px;
+  background:var(--card-bg);color:var(--text2);
+  font-size:.82rem;font-weight:600;cursor:pointer;
+  transition:border-color .2s,color .2s,transform .2s;
+}
+.back-btn:hover{border-color:var(--gold);color:var(--gold);transform:translateX(-3px)}
+.back-btn::before{content:"←";font-size:.85rem}
+
+/* ── Responsive ── */
+@media(max-width:860px){
+  .navbar{padding:0 1.25rem}
+  .nb-links,.nb-cta{display:none}
+  .page{padding:1.25rem 1.25rem 3rem}
+  .hero-card{padding:1.75rem 1.5rem 1.5rem;min-height:auto}
+  .hero-card h1{font-size:clamp(2rem,8vw,3rem)}
+  .hero-bottom{flex-direction:column;align-items:flex-start}
+  .hero-person{margin-top:.5rem}
+  .cards-grid,.skills-grid,.proj-grid,.contact-wrap,.form-row{grid-template-columns:1fr}
+  .tl-item{grid-template-columns:1fr;gap:.4rem}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
 </head>
-
 <body>
-    <div class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-mark">I</div>
-            <span class="welcome-text">WELCOME TO MY PORTFOLIO</span>
-            <h1>Izzy</h1>
-            <p>Frontend Developer</p>
 
-            <div class="loader">
-                <span></span>
-            </div>
+<!-- Loading -->
+<div id="loading">
+  <div class="l-logo">I</div>
+  <div class="l-name">Izzy</div>
+  <div class="l-sub">Frontend Developer</div>
+  <div class="l-bar"><span></span></div>
+</div>
 
-            <small>Preparing your experience...</small>
-        </div>
+<!-- Dashboard overlay -->
+<div class="dash-overlay" id="dashOverlay"></div>
+
+<!-- Dashboard panel -->
+<div class="dash-panel" id="dashPanel">
+
+  <div class="dp-header">
+    <div class="dp-brand">
+      <div class="dp-logo">I</div>
+      <div class="dp-brand-info">
+        <div class="dp-name">Izzy</div>
+        <div class="dp-role">Frontend Developer</div>
+      </div>
     </div>
-<nav>
-    <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
+    <button class="dp-close" id="dashClose" aria-label="Close">✕</button>
+  </div>
+
+  <div class="dp-actions">
+    <button class="dp-action" onclick="navTo('contact');closePanel()">
+      <div class="dp-icon">✉</div>
+      Contact
     </button>
+    <a href="https://wa.me/2348157611743" target="_blank" rel="noopener" class="dp-action">
+      <div class="dp-icon">💬</div>
+      WhatsApp
+    </a>
+    <a href="https://github.com/" target="_blank" rel="noopener" class="dp-action">
+      <div class="dp-icon">⌥</div>
+      GitHub
+    </a>
+  </div>
 
-    <div class="logo">
-        <span>Izzy</span>
-        <small>Frontend Developer</small>
+  <div class="dp-label">Main Portal</div>
+  <ul class="dp-nav">
+    <li>
+      <button onclick="navTo('home');closePanel()">
+        <span class="dp-ni">🏠</span> Home <span class="dp-chevron">›</span>
+      </button>
+    </li>
+    <li>
+      <button onclick="navTo('about');closePanel()">
+        <span class="dp-ni">👤</span> About Me <span class="dp-chevron">›</span>
+      </button>
+    </li>
+    <li>
+      <button onclick="navTo('skills');closePanel()">
+        <span class="dp-ni">⚡</span> Skills <span class="dp-chevron">›</span>
+      </button>
+    </li>
+    <li>
+      <button onclick="navTo('projects');closePanel()">
+        <span class="dp-ni">📁</span> Projects <span class="dp-chevron">›</span>
+      </button>
+    </li>
+  </ul>
+
+  <div class="dp-label">About &amp; Connect</div>
+  <ul class="dp-nav">
+    <li>
+      <button onclick="navTo('journey');closePanel()">
+        <span class="dp-ni">🎓</span> My Journey <span class="dp-chevron">›</span>
+      </button>
+    </li>
+    <li>
+      <button onclick="navTo('contact');closePanel()">
+        <span class="dp-ni">✉</span> Contact Me <span class="dp-chevron">›</span>
+      </button>
+    </li>
+    <li>
+      <a href="https://www.valiantarmyministries.org/" target="_blank" rel="noopener">
+        <span class="dp-ni">🔗</span> Live Project <span class="dp-chevron">↗</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="dp-footer">
+    <span class="dp-dot"></span>
+    Available for work
+  </div>
+
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nb-brand">
+    <div class="nb-logo">I</div>
+    <div class="nb-brand-text">
+      <div class="name">Izzy</div>
+      <div class="role">Frontend Developer</div>
     </div>
-
-    <ul>
-        <li><a href="#home" class="dashboard-link active">Home</a></li>
-        <li><a href="#about" class="dashboard-link">About</a></li>
-        <li><a href="#skills" class="dashboard-link">Skills</a></li>
-        <li><a href="#projects" class="dashboard-link">Projects</a></li>
-        <li><a href="#experience" class="dashboard-link">Journey</a></li>
-        <li><a href="#contact" class="dashboard-link">Contact</a></li>
-    </ul>
+  </div>
+  <div class="nb-links">
+    <a href="#" class="nav-lnk active" data-s="about">About</a>
+    <a href="#" class="nav-lnk" data-s="skills">Skills</a>
+    <a href="#" class="nav-lnk" data-s="projects">Projects</a>
+    <a href="#" class="nav-lnk" data-s="journey">Journey</a>
+  </div>
+  <div class="nb-right">
+    <a href="#" class="nb-cta nav-lnk" data-s="contact">Contact me</a>
+    <button class="nb-toggle" id="nbToggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
-<section id="home" class="hero dashboard-section active-section">
 
-    <div class="hero-content">
-     <p class="dashboard-label">MY PORTFOLIO DASHBOARD</p>
+<!-- Page content -->
+<div class="page">
 
-        <h1>Alaje Israel Oluwanifemi</h1>
+  <!-- HOME -->
+  <section id="sec-home" class="active">
 
-        <h2 class="typing"></h2>
-
-        <p>
-            I'm a Computer Science student learning web development
-            and interested in building modern websites.
+    <!-- Hero card -->
+    <div class="hero-card">
+      <div>
+        <div class="hero-pill">Alaje Israel Oluwanifemi</div>
+        <h1>Building for the<br>Web.</h1>
+        <div class="hero-sub-label">Computer Science · UNIOSUN</div>
+        <p class="hero-body">
+          Frontend developer in training. I build modern, responsive websites
+          starting with real projects and real users in mind.
         </p>
-
-      <div class="hero-buttons">
-    <a href="#projects" class="btn primary-btn dashboard-link">
-        View My Projects
-    </a>
-
-    <a href="#contact" class="btn secondary-btn dashboard-link">
-        Contact Me
-    </a>
-</div>
-<div class="social-links">
-    <a href="#" target="_blank">GitHub</a>
-    <a href="#" target="_blank">LinkedIn</a>
-</div>
-  
-    </div>
-    <div class="hero-image">
-        <img src="file_0000000062c471f4848eba82776f30bd.png" alt="Alaje Israel Oluwanifemi">
-    </div>
- 
-</section>
-<section id="about" class="about reveal dashboard-section">
-
-    <p class="section-title">ABOUT ME</p>
-
-    <h2>Who I Am</h2>
-
-    <p>
-        I'm Alaje Israel Oluwanifemi, a Computer Science student
-        at Osun State University with a growing interest in
-        frontend development and web technologies.
-    </p>
-
-    <p>
-        I'm currently building my skills through practical projects
-        using HTML, CSS, and JavaScript. My goal is to become a
-        professional frontend developer and create modern,
-        responsive, and user-friendly websites.
-    </p>
-
-</section>
-<section id="skills" class="skills reveal dashboard-section">
-
-    <p class="section-title">MY SKILLS</p>
-
-    <h2>Technologies & Tools I Work With</h2>
-
-    <div class="skills-container">
-
-        <div class="skill-card">
-            <h3>Frontend</h3>
-            <p>HTML, CSS, JavaScript</p>
+      </div>
+      <div class="hero-bottom">
+        <div>
+          <a href="#" class="hero-cta nav-lnk" data-s="projects">See my projects →</a>
+          <div class="hero-links" style="margin-top:.9rem">
+            <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://wa.me/2348157611743" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
         </div>
-
-        <div class="skill-card">
-            <h3>Tools</h3>
-            <p>GitHub, Microsoft Excel</p>
+        <div class="hero-person">
+          <img class="hero-photo" src="file_0000000062c471f4848eba82776f30bd.png" alt="Alaje Israel Oluwanifemi">
+          <div class="hero-person-info">
+            <div class="pname">Alaje Israel</div>
+            <div class="ptitle">Frontend Developer</div>
+          </div>
         </div>
-
-        <div class="skill-card">
-            <h3>Currently Learning</h3>
-            <p>JavaScript & Modern Web Development</p>
-        </div>
-
+      </div>
     </div>
 
-</section>
-<section id="projects" class="projects reveal dashboard-section">
-
-    <p class="section-title">MY PROJECTS</p>
-
-    <h2>Projects I've Built</h2>
-
-    <div class="projects-container">
-
-        <div class="project-card featured-project">
-    <span class="project-number">01</span>
-    <h3>Valiant Army Ministries</h3>
-
-    <p>
-        A professional ministry website designed to present the organization,
-        its mission, services, and online presence through a clear and engaging
-        user experience.
-    </p>
-
-    <p class="project-tech">HTML • CSS • Responsive Design</p>
-
-    <a
-        href="https://www.valiantarmyministries.org/"
-        class="project-link"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
-        Visit Live Website ↗
-    </a>
-</div>
-
-        <div class="project-card">
-    <span class="project-number">02</span>
-    <h3>UNIOSUN Info Website</h3>
-
-    <p>
-        A responsive university information website built
-        with HTML and CSS to provide useful information
-        about Osun State University.
-    </p>
-
-    <p class="project-tech">HTML • CSS</p>
-
-    <a href="#" class="project-link">View Project →</a>
-</div>
-
-        <div class="project-card">
-    <span class="project-number">03</span>
-    <h3>JavaScript Calculator</h3>
-
-    <p>
-        A functional calculator built with HTML, CSS,
-        and JavaScript, supporting basic arithmetic operations.
-    </p>
-
-    <p class="project-tech">HTML • CSS • JavaScript</p>
-
-    <a href="#" class="project-link">View Project →</a>
-</div>
-
-        <div class="project-card">
-    <span class="project-number">04</span>
-    <h3>Counter App</h3>
-
-    <p>
-        A simple interactive counter application that
-        increases and decreases numbers when buttons are clicked.
-    </p>
-
-    <p class="project-tech">HTML • CSS • JavaScript</p>
-
-    <a href="#" class="project-link">View Project →</a>
-</div>
-
-    </div>
-
-</section>
-<section id="experience" class="experience dashboard-section">
-
-    <p class="section-title">MY JOURNEY</p>
-
-    <h2>Education & Experience</h2>
-
-    <div class="timeline">
-
-        <div class="timeline-item">
-            <span>Education</span>
-
-            <h3>Computer Science</h3>
-
-            <h4>Osun State University</h4>
-
-            <p>
-                Currently studying Computer Science and developing
-                practical skills in web development and programming.
-            </p>
-        </div>
-
-        <div class="timeline-item">
-            <span>Web Development</span>
-
-            <h3>Frontend Development Journey</h3>
-
-            <h4>Self-Learning & Practical Projects</h4>
-
-            <p>
-                Learning HTML, CSS, and JavaScript while building
-                practical projects to strengthen my frontend
-                development skills.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-<section id="contact" class="contact dashboard-section">
-
-    <p class="section-title">GET IN TOUCH</p>
-
-    <h2>Let's Talk</h2>
-
-    <p class="contact-text">
-        Have a project, opportunity, or idea?
-        Send me a message and I'll get back to you.
-    </p>
-
-    <form class="contact-form" action="https://formspree.io/f/xbgjkoyn" method="POST">
-<div class="form-header">
-    <h3>Send Me a Message</h3>
-    <p>I'll get back to you as soon as possible.</p>
-</div>
-    <label for="name">Name</label>
-<input
-    type="text"
-    id="name"
-    name="name"
-    placeholder="Enter your name"
-    required
->
-
-<label for="email">Email</label>
-<input
-    type="email"
-    id="email"
-    name="email"
-    placeholder="Enter your email"
-    required
->
-
-<label for="subject">Subject</label>
-<input
-    type="text"
-    id="subject"
-    name="subject"
-    placeholder="What would you like to discuss?"
-    required
->
-
-<label for="message">Message</label>
-<textarea
-    id="message"
-    name="message"
-    placeholder="Tell me about your project or opportunity..."
-    rows="6"
-    required
-></textarea>
-
-        <button type="submit" id="send-button">
-    Send Message →
-</button>
-<p class="form-status"></p>
-    </form>
-
-    <div class="whatsapp-contact">
-        <p>Prefer WhatsApp?</p>
-
-        <a href="https://wa.me/2348157611743" target="_blank">
-            💬 Chat with me on WhatsApp
+    <!-- Quick portals -->
+    <div class="portals-label">Quick Portals</div>
+    <div class="portals-row">
+      <div class="portal-item active-portal" onclick="navTo('about')">
+        <div class="portal-icon">👤</div>
+        <p>About</p>
+      </div>
+      <div class="portal-item" onclick="navTo('skills')">
+        <div class="portal-icon">⚡</div>
+        <p>Skills</p>
+      </div>
+      <div class="portal-item" onclick="navTo('projects')">
+        <div class="portal-icon">📁</div>
+        <p>Projects</p>
+      </div>
+      <div class="portal-item" onclick="navTo('journey')">
+        <div class="portal-icon">🎓</div>
+        <p>Journey</p>
+      </div>
+      <div class="portal-item" onclick="navTo('contact')">
+        <div class="portal-icon">✉</div>
+        <p>Contact</p>
+      </div>
+      <div class="portal-item">
+        <a href="https://www.valiantarmyministries.org/" target="_blank" rel="noopener" style="display:contents">
+          <div class="portal-icon">🔗</div>
+          <p>Live Site</p>
         </a>
+      </div>
+      <div class="portal-item">
+        <a href="https://wa.me/2348157611743" target="_blank" rel="noopener" style="display:contents">
+          <div class="portal-icon">💬</div>
+          <p>WhatsApp</p>
+        </a>
+      </div>
     </div>
 
-</section>
-<footer>
+  </section>
 
-    <p>© 2026 Alaje Israel Oluwanifemi. All rights reserved.</p>
-    <p>Built with HTML, CSS & JavaScript.</p>
+  <!-- ABOUT -->
+  <section id="sec-about">
+    <button class="back-btn" onclick="navTo('home')">Back to Home</button>
+    <div class="panel-header">
+      <div class="panel-eyebrow">About me</div>
+      <h2 class="panel-title">Who I am</h2>
+      <p class="panel-sub">Computer Science student at UNIOSUN with a focus on frontend development. I build for the web — real projects, real learning.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="card"><div class="card-icon">🎓</div><h3>Education</h3><p>Studying Computer Science at Osun State University (UNIOSUN), building theoretical foundations alongside practical frontend skills.</p></div>
+      <div class="card"><div class="card-icon">🔥</div><h3>What drives me</h3><p>The intersection of clean code and intentional design — building things that work well and look purposeful at the same time.</p></div>
+      <div class="card"><div class="card-icon">🎯</div><h3>Currently focused on</h3><p>Deepening JavaScript skills, understanding modern web patterns, and building portfolio projects that demonstrate real problem-solving.</p></div>
+      <div class="card"><div class="card-icon">🚀</div><h3>Goals</h3><p>To become a professional frontend developer capable of contributing to meaningful products. Strong fundamentals first, then grow from there.</p></div>
+    </div>
+  </section>
 
-</footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/3.0.0/typed.umd.js" integrity="sha512-TBofwZKS1Ka3QVu5LEUNjPKs32xK1PxzBIeaXWeGE+zCk2KDwfHLXI7234Tu+UKcHdCoQUzF5Cf4ihFtwdvJlA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="script.js"></script>
+  <!-- SKILLS -->
+  <section id="sec-skills">
+    <button class="back-btn" onclick="navTo('home')">Back to Home</button>
+    <div class="panel-header">
+      <div class="panel-eyebrow">Skills</div>
+      <h2 class="panel-title">What I work with</h2>
+      <p class="panel-sub">Tools and technologies I use to build for the web, and what I'm actively learning.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Core</h3>
+        <p>The foundation everything is built on.</p>
+        <div class="tags">
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Responsive Design</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Tools</h3>
+        <p>What I use to build, track, and ship.</p>
+        <div class="tags">
+          <span class="tag">Git</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">VS Code</span>
+          <span class="tag">Microsoft Excel</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3>Learning</h3>
+        <p>What I'm actively working through now.</p>
+        <div class="tags">
+          <span class="tag">JavaScript (deepening)</span>
+          <span class="tag">Web APIs</span>
+          <span class="tag">Accessibility</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="sec-projects">
+    <button class="back-btn" onclick="navTo('home')">Back to Home</button>
+    <div class="panel-header">
+      <div class="panel-eyebrow">Projects</div>
+      <h2 class="panel-title">Things I've built</h2>
+      <p class="panel-sub">Real projects, not just exercises. Each one taught me something concrete.</p>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card featured">
+        <div class="proj-type">Live client work</div>
+        <h3>Valiant Army Ministries</h3>
+        <p>A professional ministry website presenting the organisation, its mission, services, and online presence. Live in production and actively used.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="proj-tag">HTML</span><span class="proj-tag">CSS</span><span class="proj-tag">Responsive</span></div>
+          <a href="https://www.valiantarmyministries.org/" target="_blank" rel="noopener" class="proj-link">Live site ↗</a>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-type">University project</div>
+        <h3>UNIOSUN Info Website</h3>
+        <p>A responsive information website for Osun State University — built to make key information accessible to students and visitors.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="proj-tag">HTML</span><span class="proj-tag">CSS</span></div>
+          <a href="#" class="proj-link">View →</a>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-type">JavaScript</div>
+        <h3>Calculator</h3>
+        <p>A functional calculator built to practise DOM manipulation and event-driven logic — supports basic arithmetic operations cleanly.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="proj-tag">HTML</span><span class="proj-tag">CSS</span><span class="proj-tag">JS</span></div>
+          <a href="#" class="proj-link">View →</a>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-type">JavaScript</div>
+        <h3>Counter App</h3>
+        <p>An interactive counter focused on state management and event handling — keeping logic clean even in a small, simple application.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="proj-tag">HTML</span><span class="proj-tag">CSS</span><span class="proj-tag">JS</span></div>
+          <a href="#" class="proj-link">View →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section id="sec-journey">
+    <button class="back-btn" onclick="navTo('home')">Back to Home</button>
+    <div class="panel-header">
+      <div class="panel-eyebrow">Journey</div>
+      <h2 class="panel-title">Education &amp; experience</h2>
+      <p class="panel-sub">Where I've been and what I've been building through.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">2023 – present</div>
+        <div class="tl-body">
+          <h3>Computer Science</h3>
+          <h4>Osun State University (UNIOSUN)</h4>
+          <p>Studying core CS fundamentals — algorithms, data structures, programming — alongside building practical frontend skills through independent projects and real client work.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2024 – present</div>
+        <div class="tl-body">
+          <h3>Frontend Development</h3>
+          <h4>Self-directed learning &amp; practice</h4>
+          <p>Learning by building — HTML, CSS, and JavaScript through a growing series of projects. Shipped a live client website (Valiant Army Ministries) and continue expanding the portfolio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="sec-contact">
+    <button class="back-btn" onclick="navTo('home')">Back to Home</button>
+    <div class="panel-header">
+      <div class="panel-eyebrow">Contact</div>
+      <h2 class="panel-title">Let's talk</h2>
+      <p class="panel-sub">Have a project, opportunity, or question? Send a message and I'll get back to you.</p>
+    </div>
+    <div class="contact-wrap">
+      <div class="contact-aside">
+        <p>Open to freelance projects and internship opportunities. Reach out directly — I respond fast.</p>
+        <div class="aside-items">
+          <a href="https://wa.me/2348157611743" target="_blank" rel="noopener" class="aside-item"><span class="ic">💬</span> WhatsApp</a>
+          <a href="https://github.com/" target="_blank" rel="noopener" class="aside-item"><span class="ic">⌥</span> GitHub</a>
+          <a href="https://linkedin.com/" target="_blank" rel="noopener" class="aside-item"><span class="ic">⬡</span> LinkedIn</a>
+        </div>
+      </div>
+      <form class="cf" id="cf" action="https://formspree.io/f/xbgjkoyn" method="POST">
+        <div class="form-row">
+          <div class="form-group"><label for="name">Name</label><input type="text" id="name" name="name" placeholder="Your name" required></div>
+          <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="your@email.com" required></div>
+        </div>
+        <div class="form-group"><label for="subject">Subject</label><input type="text" id="subject" name="subject" placeholder="What's this about?" required></div>
+        <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea></div>
+        <button type="submit" class="form-btn">Send message</button>
+        <p class="form-status" id="fstatus"></p>
+      </form>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/3.0.0/typed.umd.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+(function(){
+
+/* ── Loading ── */
+window.addEventListener("load",function(){
+  setTimeout(function(){document.getElementById("loading").classList.add("done");},900);
+});
+
+/* ── Section nav ── */
+var sectionMap={
+  home:"sec-home",
+  about:"sec-about",
+  skills:"sec-skills",
+  projects:"sec-projects",
+  journey:"sec-journey",
+  contact:"sec-contact"
+};
+var current="home";
+
+window.navTo=function(id){
+  // hide all
+  Object.values(sectionMap).forEach(function(s){
+    var el=document.getElementById(s);
+    if(el)el.classList.remove("active");
+  });
+  // show target
+  var target=document.getElementById(sectionMap[id]||sectionMap.home);
+  if(target){target.classList.add("active");}
+  // update nav links
+  document.querySelectorAll(".nav-lnk").forEach(function(a){
+    a.classList.toggle("active",a.dataset.s===id);
+  });
+  // update portals
+  document.querySelectorAll(".portal-item").forEach(function(p,i){
+    p.classList.remove("active-portal");
+  });
+  // push history
+  history.pushState(null,"","#"+id);
+  window.scrollTo({top:0,behavior:"instant"});
+  current=id;
+  if(typeof closePanel==="function")closePanel();
+};
+
+window.switchPanel=navTo;
+
+// Link clicks
+document.querySelectorAll(".nav-lnk").forEach(function(a){
+  a.addEventListener("click",function(e){
+    e.preventDefault();
+    navTo(a.dataset.s||"home");
+  });
+});
+
+// Popstate
+window.addEventListener("popstate",function(){
+  var id=location.hash.slice(1)||"home";
+  navTo(id);
+});
+
+// Init
+navTo(location.hash.slice(1)||"home");
+
+/* ── Dashboard panel ── */
+var dashPanel=document.getElementById("dashPanel");
+var dashOverlay=document.getElementById("dashOverlay");
+var nbToggle=document.getElementById("nbToggle");
+var dashClose=document.getElementById("dashClose");
+
+function openPanel(){
+  dashPanel.classList.add("open");
+  dashOverlay.classList.add("open");
+  document.body.style.overflow="hidden";
+}
+window.closePanel=function(){
+  dashPanel.classList.remove("open");
+  dashOverlay.classList.remove("open");
+  document.body.style.overflow="";
+};
+window.closeMobMenu=closePanel;
+nbToggle.addEventListener("click",openPanel);
+dashClose.addEventListener("click",closePanel);
+dashOverlay.addEventListener("click",closePanel);
+
+/* ── Typed ── */
+if(window.Typed){
+  new Typed(".hero-pill",{
+    strings:["Alaje Israel Oluwanifemi","Frontend Developer","Open to opportunities"],
+    typeSpeed:45,backSpeed:25,backDelay:2000,loop:true,cursorChar:"|"
+  });
+}
+
+/* ── Form ── */
+var form=document.getElementById("cf");
+var fstatus=document.getElementById("fstatus");
+if(form){
+  form.addEventListener("submit",async function(e){
+    e.preventDefault();
+    var btn=form.querySelector(".form-btn");
+    btn.textContent="Sending…";btn.disabled=true;
+    try{
+      var r=await fetch(form.action,{method:"POST",body:new FormData(form),headers:{Accept:"application/json"}});
+      if(r.ok){fstatus.textContent="Sent — I'll get back to you soon.";fstatus.style.color="#2d6a4f";form.reset();}
+      else throw 0;
+    }catch(err){fstatus.textContent="Something went wrong. Try WhatsApp instead.";fstatus.style.color="#c0392b";}
+    btn.textContent="Send message";btn.disabled=false;
+  });
+}
+
+})();
+</script>
 </body>
 </html>
